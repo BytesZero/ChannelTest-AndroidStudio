@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias '测试程序'
+            keyPassword '521521zsl'
+            storeFile file('/Users/zsl/Downloads/android/appkey/test.keystore')
+            storePassword '521521zsl'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "23.0.0"
-
     defaultConfig {
         applicationId "com.zsl.channeltest_androidstudio"
         minSdkVersion 14
@@ -13,19 +20,18 @@ android {
     }
     buildTypes {
         release {
+            //指定签名为release
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     productFlavors {
         xiaomi {}
         qihu360 {}
         baidu {}
         wandoujia {}
     }
-
-
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
